@@ -1,19 +1,17 @@
 import getParams from "./retriveRouteParams";
 import findMatchRoute from "./findMatchRoute";
 
-const routeContentLoader = async () => {
+const routeContentLoader = async ( routes ) => {
 
-   const currentRoute = findMatchRoute()
-
-   console.log('currentRoute', currentRoute)
+   const currentRoute = findMatchRoute(routes)
 
    const routerData = {
       parameter: getParams(currentRoute)
    }
 
-   const view = new currentRoute.route.view(routerData);
+   const PageComponent = new currentRoute.route.component(routerData);
 
-   document.querySelector("#app").innerHTML = await view.getHtml();
+   document.querySelector("#app").innerHTML = await PageComponent.getHtml();
 }
 
 export default routeContentLoader

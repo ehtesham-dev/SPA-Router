@@ -1,4 +1,4 @@
-import AbstractView from "./AbstractionOfView.js";
+import AbstractView from "./ViewClassParent.js";
 
 export default class extends AbstractView {
    constructor(params) {

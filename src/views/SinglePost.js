@@ -1,4 +1,4 @@
-import AbstractView from "../router/classes/AbstractionOfView.js";
+import AbstractView from "../router/classes/ViewClassParent.js";
 
 export default class extends AbstractView {
     constructor(routerData) {

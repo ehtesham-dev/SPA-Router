@@ -7,23 +7,23 @@ import MultiOptionSetting from "../../views/MultiOptionSetting";
 const routes = [
    {
       path: "/",
-      view: Dashboard
+      component: Dashboard
    },
    {
       path: "/posts",
-      view: Posts
+      component: Posts
    },
    {
       path: "/posts/:id",
-      view: PostView
+      component: PostView
    },
    {
-      path: "/setting/:option/:value",
-      view: MultiOptionSetting
+      path: "/setting/:first/:second",
+      component: MultiOptionSetting
    },
    {
       path: "/settings",
-      view: Settings
+      component: Settings
    }
 ];
 

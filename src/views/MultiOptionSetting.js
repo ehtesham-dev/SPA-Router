@@ -1,4 +1,4 @@
-import AbstractView from "../router/classes/AbstractionOfView.js";
+import AbstractView from "../router/classes/ViewClassParent.js";
 
 export default class extends AbstractView {
    constructor(params) {
@@ -12,8 +12,8 @@ export default class extends AbstractView {
                     <h1>Multi Setting</h1>
                     <p>Now you can see we can handle multi parameters</p>
                     <ul>
-                        <li>Url option : ${this.routerData.parameter.option}</li>
-                        <li>Url Value : ${this.routerData.parameter.value}</li>
+                        <li>First parameter : ${this.routerData.parameter.first}</li>
+                        <li>Second parameter : ${this.routerData.parameter.second}</li>
                     </ul>
             </section>
         `;

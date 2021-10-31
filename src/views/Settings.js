@@ -1,4 +1,4 @@
-import AbstractView from "../router/classes/AbstractionOfView.js";
+import AbstractView from "../router/classes/ViewClassParent.js";
 
 export default class extends AbstractView {
     constructor(params) {
@@ -10,7 +10,7 @@ export default class extends AbstractView {
         return `
             <h1>Settings</h1>
             <p>Manage your privacy and configuration.</p>
-            <a href="/setting/visibility/hidden" router-link>View multi option setting</a>
+            <a href="/setting/numberOne/numberTwo" router-link>View multi option setting</a>
         `;
     }
 }

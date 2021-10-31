@@ -1,12 +1,17 @@
 import anchorTagNavigator from "./functions/anchorTagNavigator";
 import routeContentLoader from "./functions/routeContentLoader";
+import routesObjectPreparer from "./functions/routesObjectPreparer";
 
 const routerInstance = () => {
    document.addEventListener("DOMContentLoaded", () => {
-      routeContentLoader()
+      const routesObject = routesObjectPreparer()
+
+      routeContentLoader(routesObject)
 
       document.body.addEventListener("click", element => {
-         anchorTagNavigator(element)
+         if (element.target.matches("[router-link]")) {
+            anchorTagNavigator(element)
+         }
       })
    });
 }
