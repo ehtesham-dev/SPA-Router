@@ -1,13 +1,10 @@
 export default class {
-    constructor(params) {
-        this.params = params;
+    constructor(routerData) {
+        this.routerData = routerData;
     }
 
     setTitle(title) {
         document.title = title;
     }
 
-    async getHtml() {
-        return "";
-    }
 }

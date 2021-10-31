@@ -1,9 +1,9 @@
 import routes from "../routes";
-import getParams from "./retriveRouteParams"
 import pathToRegex from "./convertUrlToRegex";
+import NotFound from "../classes/NotFoundPage";
 
 
-const router = async () => {
+const findMatchRoute = () => {
    const potentialMatches = routes.map(route => {
       return {
          route: route,
@@ -15,18 +15,15 @@ const router = async () => {
 
    if (!match) {
       match = {
-         route: routes[0],
-         result: [location.pathname]
+         route: {
+            path: '/not-found',
+            view: NotFound
+         },
+         result: ['/not-found']
       };
    }
 
-   const view = new match.route.view(getParams(match));
-
-
-   console.log('route', match)
-   console.log('params', getParams(match))
-
-   document.querySelector("#app").innerHTML = await view.getHtml();
+   return match
 };
 
-export default router
+export default findMatchRoute

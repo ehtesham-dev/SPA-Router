@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server  --config webpack.dev.js --open",
+    "dev": "webpack-dev-server  --config webpack.dev.js --hot --open",
     "build": "webpack --config webpack.prod.js"
   },
   "keywords": [],
@@ -21,11 +21,9 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
+    "clean-webpack-plugin": "^2.0.0",
+    "terser-webpack-plugin": "^4.2.3",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1"
-  },
-  "dependencies": {
-    "clean-webpack-plugin": "^2.0.0",
-    "terser-webpack-plugin": "^5.2.4"
   }
 }
