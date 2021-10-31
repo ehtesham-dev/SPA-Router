@@ -10,6 +10,7 @@ export default class extends AbstractView {
         return `
             <h1>Settings</h1>
             <p>Manage your privacy and configuration.</p>
+            <a href="/setting/visibility/hidden" router-link>View multi option setting</a>
         `;
     }
 }

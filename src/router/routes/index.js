@@ -1,7 +1,8 @@
 import Dashboard from "../../views/Dashboard";
 import Posts from "../../views/Posts";
-import PostView from "../../views/PostView";
+import PostView from "../../views/SinglePost";
 import Settings from "../../views/Settings";
+import MultiOptionSetting from "../../views/MultiOptionSetting";
 
 const routes = [
    {
@@ -17,8 +18,8 @@ const routes = [
       view: PostView
    },
    {
-      path: "/post/:id/:number",
-      view: PostView
+      path: "/setting/:option/:value",
+      view: MultiOptionSetting
    },
    {
       path: "/settings",
