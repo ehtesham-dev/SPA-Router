@@ -1,9 +1,9 @@
-import Dashboard from "../../views/Dashboard";
-import Posts from "../../views/Posts";
-import PostView from "../../views/SinglePost";
-import Settings from "../../views/Settings";
-import MultiOptionSetting from "../../views/MultiOptionSetting";
-import About from "../../views/About";
+import Dashboard from "../views/Dashboard";
+import Posts from "../views/Posts";
+import PostView from "../views/SinglePost";
+import Settings from "../views/Settings";
+import MultiOptionSetting from "../views/MultiOptionSetting";
+import About from "../views/About";
 
 const routes = [
    {

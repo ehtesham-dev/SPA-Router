@@ -1,4 +1,4 @@
-import AbstractView from "../router/classes/ViewClassParent.js";
+import AbstractView from "../../my_modules/router/classes/ViewClassParent.js";
 
 export default class extends AbstractView {
    constructor(params) {
@@ -7,7 +7,6 @@ export default class extends AbstractView {
    }
 
    async getHtml() {
-      console.log('this.routerData', this.routerData)
       return `
             <section class="about">
                 <h1>About us</h1>

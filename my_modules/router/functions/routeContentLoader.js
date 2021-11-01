@@ -12,8 +12,6 @@ const routeContentLoader = async ( routes ) => {
       queryString: queryStringObjectGenerator()
    }
 
-   console.log(routerData)
-
    const PageComponent = new currentRoute.route.component(routerData);
 
    document.querySelector("#app").innerHTML = await PageComponent.getHtml();

@@ -1,6 +1,4 @@
-import routes from "../routes";
-
-const routesObjectPreparer = () => {
+const routesObjectPreparer = ( routes ) => {
    const paramsRegex = (path) => {
       return new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
    }
