@@ -8,27 +8,41 @@ import About from "../views/About";
 const routes = [
    {
       path: "/",
-      component: Dashboard
+      name: 'Home',
+      component: Dashboard,
+      meta: {}
    },
    {
       path: "/posts",
-      component: Posts
+      name: 'PostArchive',
+      component: Posts,
+      meta: {}
    },
    {
       path: "/posts/:id",
-      component: PostView
+      name: 'PostSingle',
+      component: PostView,
+      meta: {}
    },
    {
       path: "/settings",
-      component: Settings
+      name: 'Setting',
+      component: Settings,
+      meta: {
+         authRequire: true
+      }
    },
    {
       path: "/setting/:first/:second",
-      component: MultiOptionSetting
+      name: 'MultiOption',
+      component: MultiOptionSetting,
+      meta: {}
    },
    {
       path: "/about",
-      component: About
+      name: 'About',
+      component: About,
+      meta: {}
    },
 ];
 

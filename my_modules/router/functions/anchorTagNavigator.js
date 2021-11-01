@@ -1,13 +1,14 @@
 import routeContentLoader from "./routeContentLoader";
-import routesObjectPreparer from "./routesObjectPreparer";
 
-const anchorTagNavigator = (element, routes) => {
+const anchorTagNavigator = (element, routes, destination) => {
    element.preventDefault();
 
-   history.pushState(null, null, element.target.href)
+   const destinationPath = destination.length ? location.origin + destination : element.target.href
 
-   const routesObject = routesObjectPreparer(routes)
-   routeContentLoader(routesObject)
+   history.pushState(null, null, destinationPath)
+
+   routeContentLoader(routes)
 }
 
 export default anchorTagNavigator
+

@@ -1,12 +1,11 @@
+import pathRegex from "../utils/pathRegex";
+
 const routesObjectPreparer = ( routes ) => {
-   const paramsRegex = (path) => {
-      return new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
-   }
 
    return routes.map(route => {
       return {
          route,
-         paramArray: location.pathname.match(paramsRegex(route.path)),
+         paramArray: location.pathname.match(pathRegex(route.path)),
       }
    })
 };

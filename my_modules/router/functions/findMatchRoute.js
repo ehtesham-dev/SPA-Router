@@ -9,7 +9,9 @@ const findMatchRoute = ( routesObject ) => {
       match = {
          route: {
             path: '/not-found',
-            component: NotFound
+            name: 'NotFound',
+            component: NotFound,
+            meta: {}
          },
          paramArray: ['/not-found']
       };
