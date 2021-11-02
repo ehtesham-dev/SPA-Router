@@ -4,11 +4,15 @@ const routesConverter = (routes) => {
    routesModel.forEach(route => {
       if("children" in route) {
          route.children.forEach(childRoute => {
-            childRoute.path = route.path + childRoute.path
-            childRoute.meta = Object.assign(route.meta, childRoute.meta)
-            routesModel.push(childRoute)
+            const newRoute = {
+               path: route.path + childRoute.path,
+               meta: Object.assign(route.meta, childRoute.meta),
+               name: childRoute.name,
+               component: route.component,
+               childComponent: childRoute.component
+            }
+            routesModel.push(newRoute)
          })
-         delete route['children']
       }
 
    })

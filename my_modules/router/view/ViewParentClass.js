@@ -3,6 +3,10 @@ export default class {
         this.routerData = routerData;
     }
 
+    routerView() {
+        return this.routerData.routerView
+    }
+
     setTitle(title) {
         document.title = title;
     }
