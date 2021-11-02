@@ -1,5 +1,5 @@
 
-const routesInitializer = (routes) => {
+const routesConverter = (routes) => {
    const routesModel = routes
    routesModel.forEach(route => {
       if("children" in route) {
@@ -15,4 +15,4 @@ const routesInitializer = (routes) => {
    return routesModel
 }
 
-export default routesInitializer
+export default routesConverter

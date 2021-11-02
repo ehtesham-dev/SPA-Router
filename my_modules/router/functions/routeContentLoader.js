@@ -5,7 +5,6 @@ import routesObjectPreparer from "../helpers/routesObjectPreparer";
 
 
 const routeContentLoader = async ( routes ) => {
-
    const routesObject = routesObjectPreparer(routes)
 
    const currentRoute = findMatchRoute(routesObject)
