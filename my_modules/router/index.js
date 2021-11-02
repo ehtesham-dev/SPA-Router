@@ -1,18 +1,15 @@
 import anchorTagNavigator from "./functions/anchorTagNavigator";
-import routeContentLoader from "./functions/routeContentLoader";
-import routerGuardRouteProvider from './functions/routerGuardRouteProvider'
+import routeInitialLoader from "./functions/routeInitialLoader";
 
-const routerInstance = (routes, routerGuard) => {
+
+const routerInstance = (routes, userRouterGuardFunction) => {
    document.addEventListener("DOMContentLoaded", () => {
 
-      routeContentLoader(routes)
+      routeInitialLoader(routes, userRouterGuardFunction)
 
       document.body.addEventListener("click", element => {
          if (element.target.matches("[router-link]")) {
-            const guardRoutesObject = routerGuardRouteProvider(element, routes)
-            const destination = routerGuard(guardRoutesObject.toPath, guardRoutesObject.fromPath)
-
-            anchorTagNavigator(element, routes, destination)
+            anchorTagNavigator(element, routes, userRouterGuardFunction)
          }
       })
    });

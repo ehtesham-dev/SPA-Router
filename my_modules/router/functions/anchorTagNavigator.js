@@ -1,9 +1,10 @@
 import routeContentLoader from "./routeContentLoader";
+import routerGuardDestinationPath from "./routerGuardDestinationPath";
 
-const anchorTagNavigator = (element, routes, destination) => {
+const anchorTagNavigator = (element, routes, userRouterGuardFunction) => {
    element.preventDefault();
 
-   const destinationPath = destination.length ? location.origin + destination : element.target.href
+   const destinationPath = routerGuardDestinationPath( routes, userRouterGuardFunction, element)
 
    history.pushState(null, null, destinationPath)
 
