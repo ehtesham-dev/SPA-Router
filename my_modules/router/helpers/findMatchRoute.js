@@ -1,4 +1,4 @@
-import NotFound from "../classes/NotFoundPage";
+import NotFound from "../view/NotFoundPage";
 
 const findMatchRoute = ( routesObject ) => {
 

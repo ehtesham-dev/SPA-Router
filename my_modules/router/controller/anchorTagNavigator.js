@@ -6,8 +6,6 @@ const anchorTagNavigator = (element, routes, userRouterGuardFunction) => {
 
    const destinationPath = routerGuardDestinationPath( routes, userRouterGuardFunction, element)
 
-   console.log('path',destinationPath)
-
    history.pushState(null, null, destinationPath)
 
    routeContentLoader(routes)
