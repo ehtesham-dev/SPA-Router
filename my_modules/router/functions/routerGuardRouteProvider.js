@@ -1,4 +1,4 @@
-import pathRegex from "../utils/pathRegex";
+import pathRegex from "../helpers/pathRegex";
 import NotFound from "../classes/NotFoundPage";
 
 const destinationPathGenerator = (element, routes) => {

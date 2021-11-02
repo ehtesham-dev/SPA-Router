@@ -1,7 +1,7 @@
-import getParams from "./retriveRouteParams";
-import findMatchRoute from "./findMatchRoute";
-import queryStringObjectGenerator from "./queryStringObjectGenerator";
-import routesObjectPreparer from "./routesObjectPreparer";
+import getParams from "../helpers/retriveRouteParams";
+import findMatchRoute from "../helpers/findMatchRoute";
+import queryStringObjectGenerator from "../helpers/queryStringObjectGenerator";
+import routesObjectPreparer from "../helpers/routesObjectPreparer";
 
 
 const routeContentLoader = async ( routes ) => {
