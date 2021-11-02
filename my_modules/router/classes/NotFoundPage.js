@@ -6,7 +6,7 @@ export default class extends AbstractView {
       this.setTitle("Not found");
    }
 
-   async getHtml() {
+   async htmlTemplate() {
       return `
             <section class="not-found">
                 <h1>Route not Found!</h1>

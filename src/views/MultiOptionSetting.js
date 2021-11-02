@@ -6,7 +6,7 @@ export default class extends AbstractView {
       this.setTitle("Multi Setting");
    }
 
-   async getHtml() {
+   async htmlTemplate() {
       return `
             <section class="posts">
                     <h1>Multi Setting</h1>

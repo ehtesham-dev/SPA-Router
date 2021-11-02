@@ -6,7 +6,7 @@ export default class extends AbstractView {
         this.setTitle("Viewing Post");
     }
 
-    async getHtml() {
+    async htmlTemplate() {
         return `
             <section class="single-post" >
                 <h1>Post</h1>

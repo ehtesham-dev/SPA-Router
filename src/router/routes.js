@@ -3,7 +3,11 @@ import Posts from "../views/Posts";
 import PostView from "../views/SinglePost";
 import Settings from "../views/Settings";
 import MultiOptionSetting from "../views/MultiOptionSetting";
-import About from "../views/About";
+import MagicWord from "../views/MagicWord";
+import Chernobyl from "../views/Chernobyl";
+import FamilyParent from "../views/FamilyParent";
+import FamilyChild from "../views/FamilyChild";
+import FamilyChildTwo from "../views/FamilyChildTwo";
 
 const routes = [
    {
@@ -28,9 +32,7 @@ const routes = [
       path: "/settings",
       name: 'Setting',
       component: Settings,
-      meta: {
-         authRequire: true
-      }
+      meta: {}
    },
    {
       path: "/setting/:first/:second",
@@ -39,11 +41,42 @@ const routes = [
       meta: {}
    },
    {
-      path: "/about",
-      name: 'About',
-      component: About,
+      path: "/magic-word",
+      name: 'MagicWord',
+      component: MagicWord,
       meta: {}
    },
+   {
+      path: "/chernobyl",
+      name: 'Chernobyl',
+      component: Chernobyl,
+      meta: {
+         authRequire : true
+      }
+   },
+   {
+      path: "/parent",
+      name: 'Parent',
+      component: FamilyParent,
+      meta: {
+         skyIsBlue: true
+      },
+      children: [
+         {
+            path: "/child",
+            name: 'Child',
+            component: FamilyChild,
+            meta: {}
+         },
+         {
+            path: "/second-child",
+            name: 'SecondChild',
+            component: FamilyChildTwo,
+            meta: {}
+         },
+      ]
+   },
+
 ];
 
 export default routes

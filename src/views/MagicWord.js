@@ -6,12 +6,12 @@ export default class extends AbstractView {
       this.setTitle("About");
    }
 
-   async getHtml() {
+   async htmlTemplate() {
       return `
             <section class="about">
-                <h1>About us</h1>
+                <h1>Magic Words</h1>
                 <p>
-                We try so hard to be at this level, so now we are honor to introduce you
+                We tried so hard to be at this level, so now we are honored to introduce you
                 <br>
                 <strong>MAGIC WORD QUERY STRINGS :</strong>
                     <ul>

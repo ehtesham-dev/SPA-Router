@@ -17,7 +17,7 @@ const routeContentLoader = async ( routes ) => {
 
    const PageComponent = new currentRoute.route.component(routerData);
 
-   document.querySelector("#app").innerHTML = await PageComponent.getHtml();
+   document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
 }
 
 export default routeContentLoader

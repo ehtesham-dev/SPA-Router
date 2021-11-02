@@ -6,7 +6,7 @@ export default class extends AbstractView {
         this.setTitle("Settings");
     }
 
-    async getHtml() {
+    async htmlTemplate() {
         return `
             <h1>Settings</h1>
             <p>Manage your privacy and configuration.</p>

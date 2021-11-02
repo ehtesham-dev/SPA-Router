@@ -1,8 +1,8 @@
 const routerGuard = (to, from) => {
-   const hasToken = true
+   const token = window.localStorage.getItem('access_token')
    let destination = ''
 
-   if (to.meta.authRequire && hasToken === false) {
+   if (to.meta.authRequire && !token) {
       destination = '/'
    }
 
