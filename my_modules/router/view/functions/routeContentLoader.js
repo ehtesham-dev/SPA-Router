@@ -1,7 +1,7 @@
-import getParams from "../helpers/retriveRouteParams";
-import findMatchRoute from "../helpers/findMatchRoute";
-import queryStringObjectGenerator from "../helpers/queryStringObjectGenerator";
-import routesObjectPreparer from "../helpers/routesObjectPreparer";
+import getParams from "../../helpers/retriveRouteParams";
+import findMatchRoute from "../../helpers/findMatchRoute";
+import queryStringObjectGenerator from "../../helpers/queryStringObjectGenerator";
+import routesObjectPreparer from "../../helpers/routesObjectPreparer";
 import childrenRouterView from "./childrenRouterView";
 
 
@@ -11,6 +11,7 @@ const routeContentLoader = async ( routes ) => {
    const currentRouteObject = findMatchRoute(routesObject)
 
    const routerData = {
+      name: currentRouteObject.route.name,
       parameter: getParams(currentRouteObject),
       queryString: queryStringObjectGenerator(),
    }

@@ -1,9 +1,8 @@
-import AbstractView from "../../my_modules/router/view/ViewParentClass.js";
+import AbstractView from "../../my_modules/router/view/classes/ViewParentClass.js";
 
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle("Dashboard");
     }
 
     async htmlTemplate() {

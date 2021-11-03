@@ -1,6 +1,7 @@
 export default class {
     constructor(routerData) {
         this.routerData = routerData;
+        document.title = this.routerData.name;
     }
 
     routerView() {
