@@ -1,7 +1,7 @@
-import getParams from "../../helpers/retriveRouteParams";
-import findMatchRoute from "../../helpers/findMatchRoute";
-import queryStringObjectGenerator from "../../helpers/queryStringObjectGenerator";
-import routesObjectPreparer from "../../helpers/routesObjectPreparer";
+import getParams from "../helpers/retriveRouteParams";
+import findMatchRoute from "../helpers/findMatchRoute";
+import queryStringObjectGenerator from "../helpers/queryStringObjectGenerator";
+import routesObjectPreparer from "../helpers/routesObjectPreparer";
 import childrenRouterView from "./childrenRouterView";
 
 

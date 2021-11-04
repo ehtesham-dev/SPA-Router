@@ -1,5 +1,5 @@
 import routerGuardDestinationPath from "./routerGuardDestinationPath";
-import routeContentLoader from "../view/functions/routeContentLoader";
+import routeContentLoader from "./routeContentLoader";
 
 
 const routerInitialLoad = (routes, userRouterGuardFunction) => {

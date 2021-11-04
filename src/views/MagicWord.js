@@ -1,4 +1,4 @@
-import AbstractView from "../../my_modules/router/view/classes/ViewParentClass.js";
+import AbstractView from "../../my_modules/router/view/ViewParentClass.js";
 
 export default class extends AbstractView {
    constructor(params) {
@@ -7,7 +7,7 @@ export default class extends AbstractView {
 
    async htmlTemplate() {
       return `
-            <section class="magic">
+            <section class="about">
                 <h1>Magic Words</h1>
                 <p>
                 We tried so hard to be at this level, so now we are honored to introduce you

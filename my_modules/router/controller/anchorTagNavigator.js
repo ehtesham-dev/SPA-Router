@@ -1,4 +1,4 @@
-import routeContentLoader from "../view/functions/routeContentLoader";
+import routeContentLoader from "./routeContentLoader";
 import routerGuardDestinationPath from "./routerGuardDestinationPath";
 
 const anchorTagNavigator = (element, routes, userRouterGuardFunction) => {
