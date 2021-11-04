@@ -10,7 +10,7 @@ export default class extends AbstractView {
             <section class="posts">
                     <h1>Posts</h1>
                     <p>You are viewing the posts!</p>
-                    <a href="/posts/2" router-link>View Second post</a>
+                    <router-link to="/posts/2" class="router-link">View Second post</router-link>
             </section>
         `;
     }

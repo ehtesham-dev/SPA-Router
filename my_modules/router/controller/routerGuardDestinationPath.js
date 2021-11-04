@@ -5,7 +5,7 @@ const routerGuardDestinationPath = ( routes, userRouterGuardFunction, element) =
 
    const guardPath = userRouterGuardFunction(guardRoutesObject.toPath, guardRoutesObject.fromPath)
 
-   return guardPath.length ? location.origin + guardPath : (element ? element.target.href : location.origin)
+   return guardPath.length ? location.origin + guardPath : (element ? element.target.attributes.to.nodeValue : location.origin)
 }
 
 export default routerGuardDestinationPath

@@ -9,7 +9,7 @@ export default class extends AbstractView {
         return `
             <h1>Settings</h1>
             <p>Manage your privacy and configuration.</p>
-            <a href="/setting/numberOne/numberTwo" router-link>View multi option setting</a>
+            <router-link to="/setting/numberOne/numberTwo" class="router-link">View multi option setting</router-link>
         `;
     }
 }

@@ -11,13 +11,13 @@
     <h1>Sorry, you need to enable JavaScript on your browser to have access to this site</h1>
 </noscript>
 <nav class="nav">
-    <a href="/" class="nav__link" router-link>Dashboard</a>
-    <a href="/posts" class="nav__link" router-link>Posts</a>
-    <a href="/settings" class="nav__link" router-link>Settings</a>
-    <a href="/magic-word?magic_word=abracadabra&in_persian=ajimajilataraji&in_russian=абракадабра" class="nav__link" router-link>Magic Words</a>
-    <a href="/chernobyl" class="nav__link" router-link>Chernobyl</a>
-    <a href="/parent" class="nav__link" router-link>Family</a>
-    <a href="/ItIsSomethingSilly" class="nav__link" router-link>Not found</a>
+    <router-link to="/" class="nav__link">Dashboard</router-link>
+    <router-link to="/posts" class="nav__link">Posts</router-link>
+    <router-link to="/settings" class="nav__link">Settings</router-link>
+    <router-link to="/magic-word?magic_word=abracadabra&in_persian=ajimajilataraji&in_russian=абракадабра" class="nav__link">Magic Words</router-link>
+    <router-link to="/chernobyl" class="nav__link">Chernobyl</router-link>
+    <router-link to="/parent" class="nav__link">Family</router-link>
+    <router-link to="/ItIsSomethingSilly" class="nav__link">Not found</router-link>
 </nav>
 <div id="app"></div>
 <!-- built files will be auto injected in #app -->

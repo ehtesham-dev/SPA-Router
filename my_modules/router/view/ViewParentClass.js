@@ -4,10 +4,6 @@ export default class {
         this.setTitle(this.routerData.name)
     }
 
-    routerView() {
-        return this.routerData.routerView
-    }
-
     setTitle(title) {
         document.title = title;
     }

@@ -21,6 +21,8 @@ const routeContentLoader = async ( routes ) => {
    const PageComponent = new currentRouteObject.route.component(constructorPayload);
 
    document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
+
+   document.querySelector('router-view').innerHTML = constructorPayload.routerView
 }
 
 export default routeContentLoader

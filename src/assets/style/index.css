@@ -21,6 +21,12 @@ body {
     text-decoration: none;
     color: #eeeeee;
     font-weight: 500;
+    cursor: pointer;
+}
+
+.router-link {
+    color: #009579;
+    cursor: pointer;
 }
 
 .nav__link:hover {

@@ -6,21 +6,27 @@ export default class extends AbstractView {
    }
 
    async htmlTemplate() {
-      if(this.routerView()) {
-         return this.routerView()
-      }
-      else return`
+      return `
             <section class="parent">
                 <h1>I am the parent 👴</h1>
-                <p>
-                    here is my child that inherits its meta and path from me:
-                 <ul>
-                     <li><a href="/parent/child?hello=world" router-link>child 👦</a></li>
-                     <li><a href="/parent/second-child" router-link>second child 👧</a></li>
-                 </ul>
-                </p>
+                ${this.routerViewOrNavigate()}
             </section>
         `;
+   }
+
+   routerViewOrNavigate() {
+      if (this.routerData.routerView) {
+         return '<router-view />'
+      }
+      else return `
+         <p>
+           here is my child that inherits its meta and path from me:
+           <ul>
+               <li><router-link to="/parent/child?hello=world" class="router-link">child 👦</router-link></li>
+               <li><router-link to="/parent/second-child" class="router-link">second child 👧</router-link></li>
+           </ul>
+         </p>
+      `
    }
 
 }
