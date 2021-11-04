@@ -3,22 +3,24 @@ import routerInitialLoad from "./router/routerInitialLoad";
 import routesConverter from "./router/routesConverter";
 import RouterLink from "./elements/router-link";
 import RouterView from "./elements/router-view";
+import HistoryFactory from "./history/factory";
 
 
-const routerInstance = (routes, userRouterGuardFunction) => {
+const routerInstance = (routes, userRouterGuardFunction, mode = 'hash') => {
    customElements.define('router-link', RouterLink);
    customElements.define('router-view', RouterView);
 
+   const modeInstance = new HistoryFactory(mode).getModeInstance()
+
+   const readyToUseRoutes = routesConverter(routes)
+
    document.addEventListener("DOMContentLoaded", () => {
 
-      const readyToUseRoutes = routesConverter(routes)
-
-      routerInitialLoad(readyToUseRoutes, userRouterGuardFunction)
+      routerInitialLoad(readyToUseRoutes, userRouterGuardFunction, modeInstance)
 
       document.body.addEventListener("click", element => {
-         console.log(element)
          if (element.target.localName === "router-link") {
-            anchorTagNavigator(element, readyToUseRoutes, userRouterGuardFunction)
+            anchorTagNavigator(element, readyToUseRoutes, userRouterGuardFunction, modeInstance)
          }
       })
    });

@@ -1,11 +1,12 @@
-import pathRegex from "../../router/pathRegex";
+import pathRegex from "./pathRegex";
+import pathGenerator from "./currentPAthGenerator";
 
 const routesObjectPreparer = ( routes ) => {
 
    return routes.map(route => {
       return {
          route,
-         paramArray: location.pathname.match(pathRegex(route.path)),
+         paramArray: pathGenerator().match(pathRegex(route.path)),
       }
    })
 };

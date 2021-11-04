@@ -1,7 +1,7 @@
 import getParams from "./retriveRouteParams";
 import findMatchRoute from "../../router/findMatchRoute";
 import queryStringObjectGenerator from "./queryStringObjectGenerator";
-import routesObjectPreparer from "./routesObjectPreparer";
+import routesObjectPreparer from "../../router/routesObjectPreparer";
 import childrenRouterView from "./childrenRouterView";
 
 
@@ -22,7 +22,8 @@ const routeContentLoader = async ( routes ) => {
 
    document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
 
-   document.querySelector('router-view').innerHTML = constructorPayload.routerView
+   if(document.getElementsByTagName('router-view') && constructorPayload.routerView)
+      document.querySelector('router-view').innerHTML = constructorPayload.routerView
 }
 
 export default routeContentLoader

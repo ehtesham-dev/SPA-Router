@@ -6,7 +6,12 @@ const queryStringObjectGenerator = () => {
 
    const queryRegex = /([^&=]+)=?([^&]*)/g
 
-   const query = window.location.search.substring(1);
+   let query = window.location.search.substring(1);
+
+   if(window.location.hash){
+      query = window.location.hash.replace('#','').split('?')[1]
+   }
+
    let urlParams = {};
 
    let match

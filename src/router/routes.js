@@ -76,7 +76,8 @@ const routes = [
          },
       ]
    },
-
 ];
+
+routes.mode = 'history'
 
 export default routes
