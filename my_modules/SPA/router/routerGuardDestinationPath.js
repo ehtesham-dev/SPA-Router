@@ -1,4 +1,4 @@
-import routerGuardRouteProvider from "../helpers/routerGuardRouteProvider";
+import routerGuardRouteProvider from "./routerGuardRouteProvider";
 
 const routerGuardDestinationPath = ( routes, userRouterGuardFunction, element) => {
    const guardRoutesObject = routerGuardRouteProvider(element, routes)

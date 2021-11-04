@@ -1,4 +1,4 @@
-import pathRegex from "./pathRegex";
+import pathRegex from "../../router/pathRegex";
 
 const routesObjectPreparer = ( routes ) => {
 

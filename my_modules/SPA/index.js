@@ -1,6 +1,6 @@
-import anchorTagNavigator from "./controller/anchorTagNavigator";
-import routerInitialLoad from "./controller/routerInitialLoad";
-import routesConverter from "./helpers/routesConverter";
+import anchorTagNavigator from "./router/anchorTagNavigator";
+import routerInitialLoad from "./router/routerInitialLoad";
+import routesConverter from "./router/routesConverter";
 import RouterLink from "./elements/router-link";
 import RouterView from "./elements/router-view";
 

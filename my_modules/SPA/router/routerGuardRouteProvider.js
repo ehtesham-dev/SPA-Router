@@ -1,5 +1,5 @@
 import pathRegex from "./pathRegex";
-import NotFound from "../view/NotFoundPage";
+import NotFound from "../core/classes/NotFoundPage";
 
 const destinationRouteGenerator = (element, routes) => {
    const clearDestinationPath = !element ? location.pathname : element.target.attributes.to.nodeValue.split('?')[0]
