@@ -1,6 +1,6 @@
-import routerInstance from "../my_modules/SPA";
 import routes from "./router/routes";
 import './assets/style/index.css'
 import routerGuard from "./router/guard";
+import Router from "../my_modules/SPA";
 
-routerInstance(routes, routerGuard, 'hash')
+window.router = new Router(routes, routerGuard, 'hash')

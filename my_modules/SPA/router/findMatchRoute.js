@@ -1,4 +1,4 @@
-import NotFound from "../core/classes/NotFoundPage";
+import NotFound from "../core/pages/NotFoundPage";
 
 const findMatchRoute = ( routesObject ) => {
 

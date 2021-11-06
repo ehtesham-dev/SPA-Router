@@ -1,33 +1,74 @@
-import anchorTagNavigator from "./router/anchorTagNavigator";
-import routerInitialLoad from "./router/routerInitialLoad";
-import routesConverter from "./router/routesConverter";
 import RouterLink from "./elements/router-link";
 import RouterView from "./elements/router-view";
 import HistoryFactory from "./history/factory";
+import RouteContentLoader from "./core/RouteContentLoader";
+import routesConverter from "./router/routesConverter";
+import routerGuardDestinationPath from "./router/routerGuardDestinationPath";
+import pathGenerator from "./router/currentPathGenerator";
 
 
-const routerInstance = (routes, userRouterGuardFunction, mode = 'hash') => {
-   customElements.define('router-link', RouterLink);
-   customElements.define('router-view', RouterView);
+export default class Router {
+   constructor(routes, userRouterGuardFunction, mode = 'hash') {
+      customElements.define('router-link', RouterLink);
+      customElements.define('router-view', RouterView);
+      this.routerPart = {
+         routes: routesConverter(routes),
+         userRouterGuardFunction,
+         modeInstance: new HistoryFactory(mode).getModeInstance()
+      }
+      this.onDOMReady()
+      this.viewObject = new RouteContentLoader(this.routerPart.routes)
+   }
 
-   const modeInstance = new HistoryFactory(mode).getModeInstance()
+   async routeContentLoader() {
+      return this.viewObject.routeContentLoad();
+   }
 
-   const readyToUseRoutes = routesConverter(routes)
+   onDOMReady() {
+      document.addEventListener("DOMContentLoaded", async() => {
+         window.addEventListener("popstate", async () => {
+            await this.routeContentLoader()
+         });
 
-   document.addEventListener("DOMContentLoaded", () => {
+         if (this.routerPart.modeInstance.constructor.name === 'HashMode')
+            window.addEventListener('hashchange', async () => {
+               await this.routerInitialLoad(this.routerPart)
+            }, false);
+         await this.routerInitialLoad()
 
-      routerInitialLoad(readyToUseRoutes, userRouterGuardFunction, modeInstance)
+         document.body.addEventListener("click", async ( element ) => {
+            if (element.target.localName === "router-link")
+               await this.anchorTagNavigator(element)
+         })
+      });
+   }
 
-      if(modeInstance.constructor.name === 'HashMode')
-         window.addEventListener('hashchange', () => {routerInitialLoad(readyToUseRoutes, userRouterGuardFunction, modeInstance)}, false);
+    async anchorTagNavigator(element) {
+      element.preventDefault();
 
+      const routesAndGuard = {
+         routes: this.routerPart.routes,
+         guardFunction: this.routerPart.userRouterGuardFunction
+      }
+      const destinationPath = routerGuardDestinationPath(routesAndGuard, element)
 
-      document.body.addEventListener("click", element => {
-         if (element.target.localName === "router-link") {
-            anchorTagNavigator(element, readyToUseRoutes, userRouterGuardFunction, modeInstance)
-         }
-      })
-   });
+      this.routerPart.modeInstance.navigateTo(destinationPath)
+
+      await this.routeContentLoader()
+   }
+
+   async routerInitialLoad() {
+      const routesAndGuard = {
+         routes: this.routerPart.routes,
+         guardFunction: this.routerPart.userRouterGuardFunction
+      }
+      const guardDestination = routerGuardDestinationPath(routesAndGuard)
+
+      if (guardDestination === pathGenerator())
+         await this.routeContentLoader()
+      else {
+         this.routerPart.modeInstance.navigateTo(guardDestination)
+         await this.routeContentLoader()
+      }
+   }
 }
-
-export default routerInstance

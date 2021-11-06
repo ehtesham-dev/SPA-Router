@@ -1,10 +1,10 @@
 import routerGuardRouteProvider from "./routerGuardRouteProvider";
 import pathGenerator from "./currentPathGenerator";
 
-const routerGuardDestinationPath = ( routes, userRouterGuardFunction, element) => {
-   const guardRoutesObject = routerGuardRouteProvider(element, routes)
+const routerGuardDestinationPath = ( routesAndGuardFunction, element) => {
+   const guardRoutesObject = routerGuardRouteProvider(element, routesAndGuardFunction.routes)
 
-   const guardPath = userRouterGuardFunction(guardRoutesObject.toPath, guardRoutesObject.fromPath)
+   const guardPath = routesAndGuardFunction.guardFunction(guardRoutesObject.toPath, guardRoutesObject.fromPath)
 
    const noRestriction = (element ? element.target.attributes.to.nodeValue : pathGenerator())
 

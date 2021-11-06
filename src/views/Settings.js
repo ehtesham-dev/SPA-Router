@@ -1,4 +1,4 @@
-import AbstractView from "../../my_modules/SPA/core/classes/ViewParentClass.js";
+import AbstractView from "../../my_modules/SPA/core/pages/ViewParentClass.js";
 
 export default class extends AbstractView {
     constructor(params) {
