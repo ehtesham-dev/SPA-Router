@@ -1,15 +1,13 @@
 {
   "name": "spa-router",
   "version": "1.0.0",
-  "private": true,
-  "description": "",
-  "main": "index.js",
+  "description": "Single page application with dynamic routing by Router module",
+  "main": "/src/app.js",
   "scripts": {
-    "dev": "webpack-dev-server  --config webpack.dev.js --open --hot",
+    "dev": "webpack-dev-server --config webpack.dev.js --open --hot",
     "build": "webpack --config webpack.prod.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "EHTESHAM",
   "license": "ISC",
   "devDependencies": {
     "clean-webpack-plugin": "^2.0.0",

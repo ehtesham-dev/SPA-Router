@@ -7,7 +7,7 @@ import routerGuardDestinationPath from "./router/routerGuardDestinationPath";
 import pathGenerator from "./router/currentPathGenerator";
 
 
-export default class Router {
+export default class SPA {
    constructor(routes, userRouterGuardFunction, mode = 'hash') {
       customElements.define('router-link', RouterLink);
       customElements.define('router-view', RouterView);
