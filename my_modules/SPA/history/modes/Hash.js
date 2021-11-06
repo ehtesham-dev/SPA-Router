@@ -1,11 +1,12 @@
 class HashMode {
    constructor() {
-      console.log('Hash mode triggered')
       this.setup()
    }
 
    setup() {
-      if(!window.location.hash) window.location.hash = '#/'
+      if(!window.location.hash) {
+         window.location.hash = '#/'
+      }
    }
 
    navigateTo(route) {

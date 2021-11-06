@@ -18,6 +18,10 @@ const routerInstance = (routes, userRouterGuardFunction, mode = 'hash') => {
 
       routerInitialLoad(readyToUseRoutes, userRouterGuardFunction, modeInstance)
 
+      if(modeInstance.constructor.name === 'HashMode')
+         window.addEventListener('hashchange', () => {routerInitialLoad(readyToUseRoutes, userRouterGuardFunction, modeInstance)}, false);
+
+
       document.body.addEventListener("click", element => {
          if (element.target.localName === "router-link") {
             anchorTagNavigator(element, readyToUseRoutes, userRouterGuardFunction, modeInstance)

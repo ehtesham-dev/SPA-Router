@@ -1,6 +1,5 @@
 class HistoryMode {
    constructor() {
-      console.log('History mode triggered')
    }
 
    navigateTo(destinationPath) {

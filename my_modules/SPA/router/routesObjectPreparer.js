@@ -1,5 +1,5 @@
 import pathRegex from "./pathRegex";
-import pathGenerator from "./currentPAthGenerator";
+import pathGenerator from "./currentPathGenerator";
 
 const routesObjectPreparer = ( routes ) => {
 
