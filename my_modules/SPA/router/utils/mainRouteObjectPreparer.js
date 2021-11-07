@@ -1,4 +1,4 @@
-const routesConverter = (routes) => {
+const mainRouteObjectPreparer = (routes) => {
    const routesModel = routes
    routesModel.forEach(route => {
       if("children" in route) {
@@ -18,4 +18,4 @@ const routesConverter = (routes) => {
    return routesModel
 }
 
-export default routesConverter
+export default mainRouteObjectPreparer

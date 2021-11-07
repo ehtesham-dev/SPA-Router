@@ -1,4 +1,4 @@
-import NotFound from "../core/pages/NotFoundPage";
+import NotFound from "../../core/pages/NotFoundPage";
 import pathRegex from "./pathRegex";
 import pathGenerator from "./currentPathGenerator";
 
@@ -16,7 +16,7 @@ const originRouteGenerator = (routes) => {
 }
 
 
-const routerGuardRouteProvider = (element, routes) => {
+const routerGuardRouteObjectProvider = (element, routes) => {
    const finalObject = {}
 
    finalObject.toPath = destinationRouteGenerator(element, routes)
@@ -26,4 +26,4 @@ const routerGuardRouteProvider = (element, routes) => {
    return finalObject
 }
 
-export default routerGuardRouteProvider
+export default routerGuardRouteObjectProvider

@@ -1,13 +1,13 @@
-import routesObjectPreparer from "../router/routesObjectPreparer";
-import findMatchRoute from "../router/findMatchRoute";
+import viewComponentPayloadPreparer from "./utils/viewComponentPayloadPreparer";
+import findMatchRoute from "./utils/findMatchRoute";
 
-export default class RouteContentLoader{
+export default class CoreContentLoader{
    constructor(routes) {
       this.routes = routes
    }
 
    async routeContentLoad() {
-      const routesObject = routesObjectPreparer(this.routes)
+      const routesObject = viewComponentPayloadPreparer(this.routes)
 
       const currentRouteObject = findMatchRoute(routesObject)
 
