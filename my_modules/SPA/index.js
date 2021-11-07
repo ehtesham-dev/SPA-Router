@@ -9,6 +9,9 @@ import pathGenerator from "./router/currentPathGenerator";
 
 export default class SPA {
    constructor(routes, userRouterGuardFunction, mode = 'hash') {
+      if (typeof SPA.instance === 'object') {
+         return SPA.instance
+      }
       customElements.define('router-link', RouterLink);
       customElements.define('router-view', RouterView);
       this.routerPart = {
@@ -18,6 +21,7 @@ export default class SPA {
       }
       this.onDOMReady()
       this.viewObject = new RouteContentLoader(this.routerPart.routes)
+      SPA.instance = this
    }
 
    async routeContentLoader() {

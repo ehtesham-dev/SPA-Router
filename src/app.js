@@ -3,4 +3,7 @@ import './assets/style/index.css'
 import routerGuard from "./router/guard";
 import SPA from "../my_modules/SPA";
 
-window.spa = new SPA(routes, routerGuard, 'history')
+const first = new SPA(routes, routerGuard, 'history')
+// const second = new SPA(routes, routerGuard, 'hash')
+
+// console.log('are they same?',second === first);
