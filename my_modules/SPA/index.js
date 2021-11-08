@@ -11,7 +11,7 @@ export default class SPA {
       SPA.instance = this
       customElements.define('router-link', RouterLink);
       customElements.define('router-view', RouterView);
-      this.router = new Router(routes, userRouterGuardFunction, mode)
+      this.Router = new Router(routes, userRouterGuardFunction, mode)
       this.onDOMReady()
    }
 
@@ -19,9 +19,9 @@ export default class SPA {
    onDOMReady() {
       document.addEventListener("DOMContentLoaded", async () => {
 
-         await this.router.routerInitialLoad()
+         await this.Router.routerInitialLoad()
 
-         this.router.triggerEventListeners()
+         this.Router.triggerEventListeners()
       });
    }
 }

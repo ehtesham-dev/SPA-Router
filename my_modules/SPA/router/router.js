@@ -6,7 +6,7 @@ import pathGenerator from "./utils/currentPathGenerator";
 
 
 export default class Router {
-   constructor(routes, userRouterGuardFunction, mode = 'hash') {
+   constructor(routes, userRouterGuardFunction, mode) {
       this.routerParts = {
          routes: mainRouteObjectPreparer(routes),
          userRouterGuardFunction,
