@@ -1,6 +1,7 @@
 class HashMode {
    constructor() {
       this.setup()
+      this.modeName = 'hashMode'
    }
 
    setup() {

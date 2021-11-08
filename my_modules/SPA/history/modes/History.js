@@ -1,5 +1,6 @@
 class HistoryMode {
    constructor() {
+      this.modeName = 'historyMode'
    }
 
    navigateTo(destinationPath) {

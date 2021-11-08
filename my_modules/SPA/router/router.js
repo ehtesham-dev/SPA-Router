@@ -24,7 +24,7 @@ export default class Router {
          await this.routeContentLoader()
       });
 
-      if (this.routerParts.modeInstance.constructor.name === 'HashMode')
+      if (this.routerParts.modeInstance.modeName === 'hashMode')
          window.addEventListener('hashchange', async () => {
             await this.routerInitialLoad(this.routerParts)
          }, false);
