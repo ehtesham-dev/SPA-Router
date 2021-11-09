@@ -29,6 +29,12 @@ body {
     cursor: pointer;
 }
 
+.child {
+    background-color: rgba(34, 34, 34, 0.22);
+    padding: 1rem;
+    border-radius: 15px;
+}
+
 .nav__link:hover {
     background: rgba(255, 255, 255, 0.05);
 }

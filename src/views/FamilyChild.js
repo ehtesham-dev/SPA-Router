@@ -14,6 +14,7 @@ export default class extends AbstractView {
                     <br>
                     <strong>Query string is => hello : ${this.routerData.queryString.hello}</strong>
                 </p>
+                 <li><router-link to="/parent/second-child" class="router-link">second child 👧</router-link></li>
             </section>
         `;
    }

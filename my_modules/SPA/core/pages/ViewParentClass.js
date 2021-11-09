@@ -1,4 +1,4 @@
-export default class {
+export default class AbstractView{
     constructor(routerData) {
         this.routerData = routerData;
         this.setTitle(this.routerData.name)

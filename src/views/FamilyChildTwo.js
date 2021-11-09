@@ -1,6 +1,6 @@
 import AbstractView from "../../my_modules/SPA/core/pages/ViewParentClass.js";
 
-export default class extends AbstractView {
+export default class SecondChild extends AbstractView {
    constructor(params) {
       super(params);
    }
@@ -12,6 +12,8 @@ export default class extends AbstractView {
                 <p>
                     I'm a kid but I know many things from my parent, like my "meta" and my "path"
                 </p>
+                 <li><router-link to="/parent/second-child/child-in-child" class="router-link">Inner child</router-link></li>
+                 <router-view ></router-view>
             </section>
         `;
    }

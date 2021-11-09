@@ -1,7 +1,7 @@
 import viewComponentPayloadPreparer from "./utils/viewComponentPayloadPreparer";
 import findMatchRoute from "./utils/findMatchRoute";
 
-export default class CoreContentLoader{
+export default class CoreContentLoader {
    constructor(routes) {
       this.routes = routes
    }
@@ -11,20 +11,29 @@ export default class CoreContentLoader{
 
       const currentRouteObject = findMatchRoute(routesObject)
 
-      const routerData = {
+      let constructorPayload = {
          name: currentRouteObject.route.name,
          parameter: this.getParams(currentRouteObject),
          queryString: this.queryStringObjectGenerator(),
       }
 
-      const constructorPayload = await this.childrenRouterView(currentRouteObject.route, routerData)
+      let PageComponent
 
-      const PageComponent = new currentRouteObject.route.component(constructorPayload);
+      const hasChildComponents = !!currentRouteObject.route.component
+      if (hasChildComponents) {
+         PageComponent = new currentRouteObject.route.component(constructorPayload);
+      } else {
+         constructorPayload = await this.childrenRouterView(currentRouteObject.route.childComponents, constructorPayload)
+         constructorPayload.routerView = constructorPayload.routerView.children[0].outerHTML
+         PageComponent = new currentRouteObject.route.parentComponent(constructorPayload);
+      }
 
       document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
 
-      if(document.getElementsByTagName('router-view') && constructorPayload.routerView)
-         document.querySelector('router-view').innerHTML = constructorPayload.routerView
+      if (document.getElementsByTagName('router-view') && constructorPayload.routerView) {
+         document.querySelector('router-view').outerHTML = constructorPayload.routerView
+      }
+
    }
 
    getParams(currentRoute) {
@@ -48,8 +57,8 @@ export default class CoreContentLoader{
 
       let query = window.location.search.substring(1);
 
-      if(window.location.hash){
-         query = window.location.hash.replace('#','').split('?')[1]
+      if (window.location.hash) {
+         query = window.location.hash.replace('#', '').split('?')[1]
       }
 
       let urlParams = {};
@@ -61,15 +70,26 @@ export default class CoreContentLoader{
       return urlParams
    }
 
-   async childrenRouterView( currentRouteObject, constructorPayload) {
 
-      let classConstructorData = constructorPayload
-
-      if("childComponent" in currentRouteObject) {
-         const childViewComponent = new currentRouteObject.childComponent(constructorPayload)
-         classConstructorData.routerView = await childViewComponent.htmlTemplate()
+   async childrenRouterView(childrenObjectArray, constructorPayload) {
+      const stringHtmlToHtmlElement = (string) => {
+         const template = document.createElement('template');
+         template.innerHTML = string;
+         return template.content
       }
 
-      return classConstructorData
+      const childrenObjectArrayModel = [...childrenObjectArray]
+      let constructorPayloadModel = Object.assign({}, constructorPayload)
+
+      const outerComponentClass = childrenObjectArrayModel.pop()
+      const childComponentInstance = new outerComponentClass(constructorPayloadModel)
+      constructorPayloadModel.routerView = stringHtmlToHtmlElement(await childComponentInstance.htmlTemplate())
+
+      const routerViewElement = constructorPayloadModel.routerView.querySelector('router-view')
+      if (routerViewElement && childrenObjectArrayModel.length) {
+         const recursiveConstructorPayload = await this.childrenRouterView(childrenObjectArrayModel, constructorPayloadModel)
+         routerViewElement.outerHTML = recursiveConstructorPayload.routerView.children[0].outerHTML
+      }
+      return constructorPayloadModel
    }
 }

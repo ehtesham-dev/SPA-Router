@@ -1,22 +1,26 @@
 import AbstractView from "../../my_modules/SPA/core/pages/ViewParentClass.js";
 
-export default class extends AbstractView {
+export default class Parent extends AbstractView {
    constructor(params) {
       super(params);
    }
 
    async htmlTemplate() {
+      console.log(1)
       return `
             <section class="parent">
                 <h1>I am the parent 👴</h1>
                 ${this.routerViewOrNavigate()}
+                <h3>CAN U SEE ME?</h3>
             </section>
         `;
    }
 
    routerViewOrNavigate() {
       if (this.routerData.routerView) {
-         return '<router-view />'
+         return `
+                <router-view ></router-view>
+         `
       }
       else return `
          <p>

@@ -8,6 +8,8 @@ import Chernobyl from "../views/Chernobyl";
 import FamilyParent from "../views/FamilyParent";
 import FamilyChild from "../views/FamilyChild";
 import FamilyChildTwo from "../views/FamilyChildTwo";
+import FamilyChildThree from "../views/FamilyChildInner";
+import FamilyChildInfinit from "../views/FamilyChildInfinite";
 
 const routes = [
    {
@@ -66,13 +68,29 @@ const routes = [
             path: "/child",
             name: 'Child',
             component: FamilyChild,
-            meta: {}
+            meta: {},
          },
          {
             path: "/second-child",
             name: 'SecondChild',
             component: FamilyChildTwo,
-            meta: {}
+            meta: {},
+            children: [
+               {
+                  path: "/child-in-child",
+                  name: 'inner-Child',
+                  component: FamilyChildThree,
+                  meta: {},
+                  children: [
+                     {
+                        path: "/Child-in-infinite",
+                        name: 'Child-in-infinite',
+                        component: FamilyChildInfinit,
+                        meta: {}
+                     },
+                  ]
+               },
+            ]
          },
       ]
    },
