@@ -16,7 +16,7 @@ export default class CoreContentLoader {
 
    async componentRendering(currentRouteObject, destAndOriginObject) {
       const renderComponentAndPreventReRendering = async () => {
-         console.log(destAndOriginObject)
+         // console.log('222',destAndOriginObject)
 
          const hasChildComponents = !currentRouteObject.route.component
          if (hasChildComponents) {
@@ -31,8 +31,12 @@ export default class CoreContentLoader {
 
          }
          else {
-            const PageComponent = new currentRouteObject.route.component(constructorPayload);
-            document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
+            constructorPayload.routerView = ''
+            const fromComponent = destAndOriginObject.fromPath.parentComponent || destAndOriginObject.fromPath.component
+            if (destAndOriginObject.toPath.component !== fromComponent) {
+               const PageComponent = new currentRouteObject.route.component(constructorPayload);
+               document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
+            }
          }
       }
 
@@ -44,10 +48,11 @@ export default class CoreContentLoader {
 
       await renderComponentAndPreventReRendering()
 
-      if (document.getElementsByTagName('router-view') && constructorPayload.routerView) {
-         const routerViewElement = document.querySelector('router-view')
+      const routerViewElement = document.querySelector('router-view')
+      if (routerViewElement) {
          routerViewElement.innerHTML = ''
-         routerViewElement.innerHTML = constructorPayload.routerView
+         if(constructorPayload.routerView)
+            routerViewElement.innerHTML = constructorPayload.routerView
       }
    }
 

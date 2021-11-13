@@ -5,17 +5,11 @@ class HistoryFactory {
    constructor(mode) {
       switch (mode) {
          case 'hash':
-            this.modeInstance = new HashMode()
-            break
-
+            return new HashMode()
          case 'history':
          default:
-            this.modeInstance = new HistoryMode()
+            return new HistoryMode()
       }
-   }
-
-   getModeInstance(){
-      return this.modeInstance
    }
 }
 
