@@ -16,7 +16,7 @@ export default class CoreContentLoader {
 
    async componentRendering(currentRouteObject, destAndOriginObject) {
       const renderComponentAndPreventReRendering = async () => {
-         // console.log('222',destAndOriginObject)
+         console.log('destAndOriginObject',destAndOriginObject)
 
          const hasChildComponents = !currentRouteObject.route.component
          if (hasChildComponents) {
@@ -108,7 +108,7 @@ export default class CoreContentLoader {
       const routerViewElement = constructorPayloadModel.routerView.querySelector('router-view')
       if (routerViewElement && childrenObjectArrayModel.length) {
          const recursiveConstructorPayload = await this.childrenRouterView(childrenObjectArrayModel, constructorPayloadModel)
-         routerViewElement.outerHTML = recursiveConstructorPayload.routerView.children[0].outerHTML
+         routerViewElement.innerHTML = recursiveConstructorPayload.routerView.children[0].outerHTML
       }
       return constructorPayloadModel
    }

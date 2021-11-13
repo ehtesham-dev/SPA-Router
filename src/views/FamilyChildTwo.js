@@ -6,6 +6,7 @@ export default class SecondChild extends AbstractView {
    }
 
    async htmlTemplate() {
+      console.log('Second child rendered')
       return `
             <section class="child">
                 <h1>I am the second Child 👧</h1>
