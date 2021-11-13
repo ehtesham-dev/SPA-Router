@@ -16,7 +16,7 @@ const originRouteGenerator = (routes) => {
 }
 
 
-const routerGuardRouteObjectProvider = (element, routes) => {
+const routerGuardRouteObjectProvider = (routes, element = null) => {
    const finalObject = {}
 
    finalObject.toPath = destinationRouteGenerator(element, routes)

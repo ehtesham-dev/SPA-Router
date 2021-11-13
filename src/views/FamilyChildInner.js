@@ -6,6 +6,7 @@ export default class InnerChild extends AbstractView {
    }
 
    async htmlTemplate() {
+      console.log('Child inner rendered')
       return `
             <section class="child">
                 <h1>I am the child in child 🧬</h1>

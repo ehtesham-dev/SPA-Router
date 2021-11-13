@@ -6,6 +6,7 @@ export default class InfiniteChild extends AbstractView {
    }
 
    async htmlTemplate() {
+      console.log('Child infinite rendered')
       return `
             <section class="child">
                 <h1>INFINITY CHIIIIIIILD 🚀</h1>

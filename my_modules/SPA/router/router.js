@@ -3,6 +3,8 @@ import CoreContentLoader from "../core/CoreContentLoader";
 import mainRouteObjectPreparer from "./utils/mainRouteObjectPreparer";
 import routerGuardDestinationPath from "./utils/routerGuardDestinationPath";
 import pathGenerator from "./utils/currentPathGenerator";
+import originRouteObjectGenerator from "./utils/originRouteObjectGenerator";
+import destinationRouteObjectGenerator from "./utils/destinationRouteObjectGenerator";
 
 
 export default class Router {
@@ -15,13 +17,18 @@ export default class Router {
       this.coreObject = new CoreContentLoader(this.routerParts.routes)
    }
 
-   async routeContentLoader() {
-      return this.coreObject.routeContentLoad();
+   async routeContentLoader(destAndOrigin) {
+      return this.coreObject.routeContentLoad(destAndOrigin);
    }
 
    triggerEventListeners() {
       window.addEventListener("popstate", async () => {
-         await this.routeContentLoader()
+         const previousPath = `/${document.referrer.split('/').slice(3).toString().replace(',','/')}`
+         const destAndOriginRoutesObject = {
+            fromPath: originRouteObjectGenerator(this.routerParts.routes, previousPath),
+            toPath: destinationRouteObjectGenerator(this.routerParts.routes)
+         }
+         await this.routeContentLoader(destAndOriginRoutesObject)
       });
 
       if (this.routerParts.modeInstance.modeName === 'hashMode')
@@ -42,29 +49,41 @@ export default class Router {
    async anchorTagNavigator(element) {
       element.preventDefault();
 
+      const destAndOriginRoutesObject = {
+         fromPath: originRouteObjectGenerator(this.routerParts.routes),
+         toPath: destinationRouteObjectGenerator(this.routerParts.routes, element)
+      }
+
       const routesAndGuard = {
-         routes: this.routerParts.routes,
+         destAndOrigin: destAndOriginRoutesObject,
          guardFunction: this.routerParts.userRouterGuardFunction
       }
+
       const destinationPath = routerGuardDestinationPath(routesAndGuard, element)
 
       this.simpleNavigator(destinationPath)
 
-      await this.routeContentLoader()
+      await this.routeContentLoader(routesAndGuard.destAndOrigin)
    }
 
    async routerInitialLoad() {
+
+      const destAndOriginRoutesObject = {
+         fromPath: 'Initial Load!',
+         toPath: destinationRouteObjectGenerator(this.routerParts.routes)
+      }
+
       const routesAndGuard = {
-         routes: this.routerParts.routes,
+         destAndOrigin: destAndOriginRoutesObject,
          guardFunction: this.routerParts.userRouterGuardFunction
       }
       const guardDestination = routerGuardDestinationPath(routesAndGuard)
 
       if (guardDestination === pathGenerator())
-         await this.routeContentLoader()
+         await this.routeContentLoader(routesAndGuard.destAndOrigin)
       else {
          this.simpleNavigator(guardDestination)
-         await this.routeContentLoader()
+         await this.routeContentLoader(routesAndGuard.destAndOrigin)
       }
    }
 }

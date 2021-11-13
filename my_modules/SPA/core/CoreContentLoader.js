@@ -6,10 +6,35 @@ export default class CoreContentLoader {
       this.routes = routes
    }
 
-   async routeContentLoad() {
+   async routeContentLoad(destAndOriginObject) {
       const routesObject = viewComponentPayloadPreparer(this.routes)
 
       const currentRouteObject = findMatchRoute(routesObject)
+
+      await this.componentRendering(currentRouteObject, destAndOriginObject)
+   }
+
+   async componentRendering(currentRouteObject, destAndOriginObject) {
+      const renderComponentAndPreventReRendering = async () => {
+         console.log(destAndOriginObject)
+
+         const hasChildComponents = !currentRouteObject.route.component
+         if (hasChildComponents) {
+            constructorPayload = await this.childrenRouterView(currentRouteObject.route.childComponents, constructorPayload)
+            constructorPayload.routerView = constructorPayload.routerView.children[0].outerHTML
+
+            const fromComponent = destAndOriginObject.fromPath.parentComponent || destAndOriginObject.fromPath.component
+            if (destAndOriginObject.toPath.parentComponent !== fromComponent) {
+               const PageComponent = new currentRouteObject.route.parentComponent(constructorPayload);
+               document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
+            }
+
+         }
+         else {
+            const PageComponent = new currentRouteObject.route.component(constructorPayload);
+            document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
+         }
+      }
 
       let constructorPayload = {
          name: currentRouteObject.route.name,
@@ -17,23 +42,13 @@ export default class CoreContentLoader {
          queryString: this.queryStringObjectGenerator(),
       }
 
-      let PageComponent
-
-      const hasChildComponents = !!currentRouteObject.route.component
-      if (hasChildComponents) {
-         PageComponent = new currentRouteObject.route.component(constructorPayload);
-      } else {
-         constructorPayload = await this.childrenRouterView(currentRouteObject.route.childComponents, constructorPayload)
-         constructorPayload.routerView = constructorPayload.routerView.children[0].outerHTML
-         PageComponent = new currentRouteObject.route.parentComponent(constructorPayload);
-      }
-
-      document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
+      await renderComponentAndPreventReRendering()
 
       if (document.getElementsByTagName('router-view') && constructorPayload.routerView) {
-         document.querySelector('router-view').outerHTML = constructorPayload.routerView
+         const routerViewElement = document.querySelector('router-view')
+         routerViewElement.innerHTML = ''
+         routerViewElement.innerHTML = constructorPayload.routerView
       }
-
    }
 
    getParams(currentRoute) {

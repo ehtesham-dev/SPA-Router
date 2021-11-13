@@ -9,7 +9,7 @@ import FamilyParent from "../views/FamilyParent";
 import FamilyChild from "../views/FamilyChild";
 import FamilyChildTwo from "../views/FamilyChildTwo";
 import FamilyChildThree from "../views/FamilyChildInner";
-import FamilyChildInfinit from "../views/FamilyChildInfinite";
+import FamilyChildInfinite from "../views/FamilyChildInfinite";
 
 const routes = [
    {
@@ -85,7 +85,7 @@ const routes = [
                      {
                         path: "/Child-in-infinite",
                         name: 'Child-in-infinite',
-                        component: FamilyChildInfinit,
+                        component: FamilyChildInfinite,
                         meta: {}
                      },
                   ]
