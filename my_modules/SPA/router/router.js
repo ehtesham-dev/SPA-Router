@@ -27,12 +27,14 @@ export default class Router {
       if (this.routerParts.modeInstance.modeName === 'hashMode') {
          window.addEventListener('hashchange', async () => {
             if(!this.hashChangeByLink) {
-               const firstLoadTime = this.routerParts.modeInstance.initialHashLoad
-               if(firstLoadTime)
-                  await this.routerInitialLoad()
-               else {
-                  const previousPath = location.hash
+               const hashHistoryArray = this.routerParts.modeInstance.hashHistoryArray
+               if(hashHistoryArray.length) {
+                  const previousPath = this.routerParts.modeInstance.popHashHistoryArray()
+                  console.log('previousPath', previousPath)
                   await this.hashEventContentLoad(this.routerParts, previousPath)
+               }
+               else {
+                  await this.routerInitialLoad()
                }
             }
             this.hashChangeByLink = false
@@ -45,6 +47,7 @@ export default class Router {
                fromPath: originRouteObjectGenerator(this.routerParts.routes, previousPath),
                toPath: destinationRouteObjectGenerator(this.routerParts.routes)
             }
+            this.routerParts.modeInstance.pushHistoryArray(destAndOriginRoutesObject.toPath.path)
 
             await this.routeContentLoader(destAndOriginRoutesObject)
          });

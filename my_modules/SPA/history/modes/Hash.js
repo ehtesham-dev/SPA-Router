@@ -3,7 +3,7 @@ class HashMode {
    constructor() {
       this.setup()
       this.modeName = 'hashMode'
-      this.initialHashLoad = true
+      this.hashHistoryArray = []
    }
 
    setup() {
@@ -13,8 +13,12 @@ class HashMode {
    }
 
    navigateTo(route) {
-      this.initialHashLoad = false
+      this.hashHistoryArray.push(route)
       window.location.hash = route
+   }
+
+   popHashHistoryArray() {
+      return this.hashHistoryArray.pop()
    }
 
 }

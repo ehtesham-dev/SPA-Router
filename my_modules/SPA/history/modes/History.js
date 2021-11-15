@@ -6,12 +6,15 @@ class HistoryMode {
    }
 
    navigateTo(destinationPath) {
-      this.historyArray.push(destinationPath.split('?')[0])
+      this.pushHistoryArray(destinationPath)
       history.pushState({destinationPath}, null, destinationPath)
    }
 
-   popHistoryArray() {
+   pushHistoryArray(path) {
+      this.historyArray.push(path.split('?')[0])
+   }
 
+   popHistoryArray() {
       return this.historyArray.pop()
    }
 
