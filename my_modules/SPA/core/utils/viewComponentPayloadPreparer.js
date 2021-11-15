@@ -1,5 +1,5 @@
 import pathRegex from "../../router/utils/pathRegex";
-import pathGenerator from "../../router/utils/currentPathGenerator";
+import pathGenerator from "../../router/utils/currentPathOrHashGenerator";
 
 const viewComponentPayloadPreparer = (routes ) => {
 

@@ -1,6 +1,6 @@
 import AbstractView from "../../my_modules/SPA/core/pages/ViewParentClass.js";
 
-export default class extends AbstractView {
+export default class FirstChild extends AbstractView {
    constructor(params) {
       super(params);
    }

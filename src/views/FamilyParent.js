@@ -6,7 +6,7 @@ export default class Parent extends AbstractView {
    }
 
    async htmlTemplate() {
-      console.log('Parent rendered')
+      console.log('**********','Parent rendered')
       return `
             <section class="parent">
                 <h1>I am the parent 👴</h1>

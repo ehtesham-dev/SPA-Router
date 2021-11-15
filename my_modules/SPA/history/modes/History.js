@@ -11,6 +11,7 @@ class HistoryMode {
    }
 
    popHistoryArray() {
+
       return this.historyArray.pop()
    }
 

@@ -1,4 +1,4 @@
-import pathGenerator from "./currentPathGenerator";
+import pathGenerator from "./currentPathOrHashGenerator";
 import pathRegex from "./pathRegex";
 import NotFound from "../../core/pages/NotFoundPage";
 
