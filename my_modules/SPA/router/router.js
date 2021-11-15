@@ -24,13 +24,13 @@ export default class Router {
    }
 
    triggerEventListeners() {
+
       if (this.routerParts.modeInstance.modeName === 'hashMode') {
          window.addEventListener('hashchange', async () => {
             if(!this.hashChangeByLink) {
                const hashHistoryArray = this.routerParts.modeInstance.hashHistoryArray
                if(hashHistoryArray.length) {
                   const previousPath = this.routerParts.modeInstance.popHashHistoryArray()
-                  console.log('previousPath', previousPath)
                   await this.hashEventContentLoad(this.routerParts, previousPath)
                }
                else {
@@ -72,13 +72,10 @@ export default class Router {
 
       const guardDestination = routerGuardDestinationPath(routesAndGuard)
 
-      console.log('guardDestination', guardDestination)
-
       this.simpleNavigator(guardDestination)
 
       await this.routeContentLoader(routesAndGuard.destAndOrigin)
    }
-
 
    simpleNavigator(destinationPath) {
       this.routerParts.modeInstance.navigateTo(destinationPath)

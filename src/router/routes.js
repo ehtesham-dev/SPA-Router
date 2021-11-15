@@ -46,7 +46,12 @@ const routes = [
       path: "/magic-word",
       name: 'MagicWord',
       component: MagicWord,
-      meta: {}
+      meta: {},
+      guard: function (to, from) {
+         console.log('Az in var =>', from)
+         console.log('Be in var =>', to)
+         return ''
+      }
    },
    {
       path: "/chernobyl",

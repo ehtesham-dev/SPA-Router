@@ -1,5 +1,6 @@
 import viewComponentPayloadPreparer from "./utils/viewComponentPayloadPreparer";
 import findMatchRoute from "./utils/findMatchRoute";
+// import originRouteObjectGenerator from "../router/utils/originRouteObjectGenerator";
 
 export default class CoreContentLoader {
    constructor(routes) {
@@ -53,7 +54,6 @@ export default class CoreContentLoader {
       }
 
       const renderComponentAndPreventReRendering = async () => {
-         console.log('destAndOriginObject', destAndOriginObject)
 
          const isParentComponents = !currentRouteObject.route.component
          if (isParentComponents) {

@@ -7,7 +7,7 @@ class HistoryMode {
 
    navigateTo(destinationPath) {
       this.pushHistoryArray(destinationPath)
-      history.pushState({destinationPath}, null, destinationPath)
+      history.pushState(null , null, destinationPath)
    }
 
    pushHistoryArray(path) {
