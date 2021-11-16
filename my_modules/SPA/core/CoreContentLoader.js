@@ -1,6 +1,7 @@
 import viewComponentPayloadPreparer from "./utils/viewComponentPayloadPreparer";
 import findMatchRoute from "./utils/findMatchRoute";
-// import originRouteObjectGenerator from "../router/utils/originRouteObjectGenerator";
+import queryStringObjectGenerator from "./utils/queryStringObjectGenerator";
+import getParams from "./utils/getRouteParams";
 
 export default class CoreContentLoader {
    constructor(routes) {
@@ -21,32 +22,37 @@ export default class CoreContentLoader {
          const destinationChildren = destAndOriginObject.toPath.childComponents
          const destinationLength = destinationChildren.length
          const originLength = originChildren.length
-         let counter = 0
+         let equalChildren = 0
 
-         while (counter < destinationLength) {
-            if (destinationChildren[(destinationLength - 1) - counter] === originChildren[(originLength - 1) - counter]) {
-               counter++
+         while (equalChildren < destinationLength) {
+            const lastChildOfDestinationInAWhileRound = destinationChildren[(destinationLength - 1) - equalChildren]
+            const lastChildOfOriginInAWhileRound = originChildren[(originLength - 1) - equalChildren]
+
+            if (lastChildOfDestinationInAWhileRound === lastChildOfOriginInAWhileRound) {
+               equalChildren++
             } else {
-               const newChildComponentArray = destinationChildren.slice(0, destinationLength - counter)
+               const newChildComponentArray = destinationChildren.slice(0, destinationLength - equalChildren)
                if (originLength - destinationLength === 0 && newChildComponentArray.length) {
                   return {
                      newComponents: newChildComponentArray,
-                     diff: originLength - newChildComponentArray.length
+                     diff: originLength - (newChildComponentArray.length -1)
                   }
                } else {
                   return {
                      newComponents: newChildComponentArray,
-                     diff: originLength - destinationLength
+                     diff: originLength - (destinationLength - 1)
                   }
                }
             }
          }
-         if (counter < originLength) {
+         const backInSameSequenceOfChildren = !!equalChildren < originLength
+         if (backInSameSequenceOfChildren) {
             return {
                newComponents: [],
-               diff: originLength - counter
+               diff: originLength - equalChildren
             }
          }
+         // No difference between destination and origin routes
          else return {
             newComponents: [],
             diff: 0
@@ -54,24 +60,27 @@ export default class CoreContentLoader {
       }
 
       const renderComponentAndPreventReRendering = async () => {
+         const isParentComponentWithChildren = !currentRouteObject.route.component
+         const fromComponent = destAndOriginObject.fromPath.parentComponent || destAndOriginObject.fromPath.component
 
-         const isParentComponents = !currentRouteObject.route.component
-         if (isParentComponents) {
-            const fromComponent = destAndOriginObject.fromPath.parentComponent || destAndOriginObject.fromPath.component
+         if (isParentComponentWithChildren) {
             if (destAndOriginObject.toPath.parentComponent !== fromComponent) {
                constructorPayload = await this.renderInRouterViews(currentRouteObject.route.childComponents, constructorPayload)
                constructorPayload.routerView = constructorPayload.routerView.children[0].outerHTML
-               const PageComponent = new currentRouteObject.route.parentComponent(constructorPayload);
-               document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
+
+               const ParentComponent = new currentRouteObject.route.parentComponent(constructorPayload);
+               document.querySelector("#app").innerHTML = await ParentComponent.htmlTemplate();
+
             } else {
                const childRenderingPayload = preventChildComponentReRendering(destAndOriginObject)
                constructorPayload.routerView = await this.familyChildrenRouterView(childRenderingPayload, constructorPayload) || constructorPayload.routerView
             }
          } else {
             const routerViewElement = document.querySelector('router-view')
+
             if (routerViewElement)
                routerViewElement.innerHTML = ''
-            const fromComponent = destAndOriginObject.fromPath.parentComponent || destAndOriginObject.fromPath.component
+
             if (destAndOriginObject.toPath.component !== fromComponent) {
                const PageComponent = new currentRouteObject.route.component(constructorPayload);
                document.querySelector("#app").innerHTML = await PageComponent.htmlTemplate();
@@ -81,51 +90,17 @@ export default class CoreContentLoader {
 
       let constructorPayload = {
          name: currentRouteObject.route.name,
-         parameter: this.getParams(currentRouteObject),
-         queryString: this.queryStringObjectGenerator(),
+         parameter: getParams(currentRouteObject),
+         queryString: queryStringObjectGenerator(),
       }
 
       await renderComponentAndPreventReRendering()
 
-      const routerViewElement = document.querySelectorAll('router-view')
+      const routerViewElements = document.querySelectorAll('router-view')
 
-      if (routerViewElement.length && constructorPayload.routerView) {
-         routerViewElement[routerViewElement.length - 1].innerHTML = constructorPayload.routerView
+      if (routerViewElements.length && constructorPayload.routerView) {
+         routerViewElements[routerViewElements.length - 1].innerHTML = constructorPayload.routerView
       }
-   }
-
-   getParams(currentRoute) {
-
-      const values = currentRoute.paramArray.slice(1);
-
-      const keys = Array.from(currentRoute.route.path.matchAll(/:(\w+)/g)).map(result => result[1]);
-
-      return Object.fromEntries(keys.map((key, i) => {
-         return [key, values[i]];
-      }));
-   };
-
-   queryStringObjectGenerator() {
-
-      const fixAndDecode = string => {
-         return decodeURIComponent(string.replace(/\+/g, " "));
-      }
-
-      const queryRegex = /([^&=]+)=?([^&]*)/g
-
-      let query = window.location.search.substring(1);
-
-      if (window.location.hash) {
-         query = window.location.hash.replace('#', '').split('?')[1]
-      }
-
-      let urlParams = {};
-
-      let match
-      while (match = queryRegex.exec(query))
-         urlParams[fixAndDecode(match[1])] = fixAndDecode(match[2]);
-
-      return urlParams
    }
 
    async renderInRouterViews(childrenObjectArray, constructorPayload) {
@@ -135,19 +110,19 @@ export default class CoreContentLoader {
          return template.content
       }
 
-      const childrenObjectArrayModel = [...childrenObjectArray]
-      let constructorPayloadModel = Object.assign({}, constructorPayload)
+      const secondaryChildrenObjectArray = [...childrenObjectArray]
+      let secondaryConstructorPayloadObject = Object.assign({}, constructorPayload)
 
-      const outerComponentClass = childrenObjectArrayModel.pop()
-      const childComponentInstance = new outerComponentClass(constructorPayloadModel)
-      constructorPayloadModel.routerView = stringHtmlToHtmlElement(await childComponentInstance.htmlTemplate())
+      const mostOuterChildComponent = secondaryChildrenObjectArray.pop()
+      const childComponentInstance = new mostOuterChildComponent(secondaryConstructorPayloadObject)
+      secondaryConstructorPayloadObject.routerView = stringHtmlToHtmlElement(await childComponentInstance.htmlTemplate())
 
-      const routerViewElement = constructorPayloadModel.routerView.querySelector('router-view')
-      if (routerViewElement && childrenObjectArrayModel.length) {
-         const recursiveConstructorPayload = await this.renderInRouterViews(childrenObjectArrayModel, constructorPayloadModel)
+      const routerViewElement = secondaryConstructorPayloadObject.routerView.querySelector('router-view')
+      if (routerViewElement && secondaryChildrenObjectArray.length) {
+         const recursiveConstructorPayload = await this.renderInRouterViews(secondaryChildrenObjectArray, secondaryConstructorPayloadObject)
          routerViewElement.innerHTML = recursiveConstructorPayload.routerView.children[0].outerHTML
       }
-      return constructorPayloadModel
+      return secondaryConstructorPayloadObject
    }
 
    async familyChildrenRouterView(renderingData, constructorPayload) {
@@ -155,26 +130,23 @@ export default class CoreContentLoader {
          const renderingPayload = await this.renderInRouterViews(renderingData.newComponents, constructorPayload)
          return renderingPayload.routerView.children[0].outerHTML
       }
-      // console.log('renderingData', renderingData)
+
+      const removeRedundantRouterViewsElement = () => {
+         const allRouterViewTags = document.querySelectorAll('router-view')
+         if (allRouterViewTags[allRouterViewTags.length - 1].innerHTML === '') {
+            allRouterViewTags[allRouterViewTags.length - 1].outerHTML = ''
+            allRouterViewTags[allRouterViewTags.length - 2].innerHTML = ''
+         } else
+            allRouterViewTags[allRouterViewTags.length - 1].innerHTML = ''
+      }
 
       if (renderingData.diff >= 0) {
          let counter = 0
          while (counter < renderingData.diff) {
-            const allRouterViewTags = document.querySelectorAll('router-view')
-            if (allRouterViewTags[allRouterViewTags.length - 1].innerHTML === ''){
-               allRouterViewTags[allRouterViewTags.length - 1].outerHTML = ''
-               allRouterViewTags[allRouterViewTags.length - 2].innerHTML = ''
-            }
-            else
-               allRouterViewTags[allRouterViewTags.length - 1].innerHTML = ''
+            removeRedundantRouterViewsElement()
             counter++
          }
-         if(renderingData.newComponents.length) {
-            const allRouterViewTags = document.querySelectorAll('router-view')
-            if (allRouterViewTags[allRouterViewTags.length - 1].innerHTML === ''){
-               allRouterViewTags[allRouterViewTags.length - 1].outerHTML = ''
-               allRouterViewTags[allRouterViewTags.length - 2].innerHTML = ''
-            }
+         if (renderingData.newComponents.length) {
             return await returnRenderedRouterView()
          }
       }

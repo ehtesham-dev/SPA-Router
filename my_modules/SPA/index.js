@@ -11,6 +11,7 @@ export default class SPA {
       SPA.instance = this
       customElements.define('router-link', RouterLink);
       customElements.define('router-view', RouterView);
+      if(mode !== 'hash' && mode !== 'history') throw new Error('Invalid mode! (only "hash" and "history" are allowed)')
       this.Router = new Router(routes, userRouterGuardFunction, mode)
       this.onDOMReady()
    }

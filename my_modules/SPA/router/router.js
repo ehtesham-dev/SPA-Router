@@ -1,10 +1,11 @@
-import HistoryFactory from "../history/factory";
+import HistoryFactory from "../history/historyModeFactory";
 import CoreContentLoader from "../core/CoreContentLoader";
 import mainRouteObjectPreparer from "./utils/mainRouteObjectPreparer";
 import routerGuardDestinationPath from "./utils/routerGuardDestinationPath";
 import pathGenerator from "./utils/currentPathOrHashGenerator";
 import originRouteObjectGenerator from "./utils/originRouteObjectGenerator";
 import destinationRouteObjectGenerator from "./utils/destinationRouteObjectGenerator";
+import hashChangeGuardNavigator from "./utils/hashChangeGuardNavigator";
 
 
 export default class Router {
@@ -24,14 +25,14 @@ export default class Router {
    }
 
    triggerEventListeners() {
-
       if (this.routerParts.modeInstance.modeName === 'hashMode') {
          window.addEventListener('hashchange', async () => {
             if(!this.hashChangeByLink) {
                const hashHistoryArray = this.routerParts.modeInstance.hashHistoryArray
                if(hashHistoryArray.length) {
                   const previousPath = this.routerParts.modeInstance.popHashHistoryArray()
-                  await this.hashEventContentLoad(this.routerParts, previousPath)
+                  const routesAndGuard = hashChangeGuardNavigator(this.routerParts, previousPath)
+                  await this.routeContentLoader(routesAndGuard.destAndOrigin)
                }
                else {
                   await this.routerInitialLoad()
@@ -40,7 +41,7 @@ export default class Router {
             this.hashChangeByLink = false
          }, false);
       }
-      else {
+      else if((this.routerParts.modeInstance.modeName === 'historyMode')) {
          window.addEventListener("popstate", async () => {
             const previousPath = this.routerParts.modeInstance.popHistoryArray()
             const destAndOriginRoutesObject = {
@@ -57,24 +58,6 @@ export default class Router {
          if (element.target.localName === "router-link")
             await this.anchorTagNavigator(element)
       })
-   }
-
-   async hashEventContentLoad (routerParts ,previousPath){
-      const destAndOriginRoutesObject = {
-         fromPath: originRouteObjectGenerator(routerParts.routes, previousPath),
-         toPath: destinationRouteObjectGenerator(routerParts.routes)
-      }
-
-      const routesAndGuard = {
-         destAndOrigin: destAndOriginRoutesObject,
-         guardFunction: routerParts.userRouterGuardFunction
-      }
-
-      const guardDestination = routerGuardDestinationPath(routesAndGuard)
-
-      this.simpleNavigator(guardDestination)
-
-      await this.routeContentLoader(routesAndGuard.destAndOrigin)
    }
 
    simpleNavigator(destinationPath) {
