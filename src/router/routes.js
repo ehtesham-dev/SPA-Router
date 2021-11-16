@@ -47,10 +47,10 @@ const routes = [
       name: 'MagicWord',
       component: MagicWord,
       meta: {},
-      guard: function (to, from) {
+      guard: function (to, from, next) {
          console.log('Az in var =>', from)
          console.log('Be in var =>', to)
-         return ''
+         next('')
       }
    },
    {

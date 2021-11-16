@@ -1,12 +1,11 @@
-const routerGuard = (to, from) => {
+const routerGuard = (to, from, next) => {
    const token = window.localStorage.getItem('access_token')
-   let destination = ''
 
    if (to.meta.authRequire && !token) {
-      destination = '/'
+      next('/')
    }
 
-   return destination
+   else next('')
 }
 
 export default routerGuard

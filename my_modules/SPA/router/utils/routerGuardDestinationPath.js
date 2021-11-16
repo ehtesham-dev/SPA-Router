@@ -4,14 +4,21 @@ const PrioritizationOfGuards = (routesAndGuardFunction) => {
 }
 
 const routerGuardDestinationPath = ( routesAndGuardFunction, element) => {
+   let nextDestination = ''
+
+   const nextAction = (destination) => {
+      nextDestination = destination
+   }
 
    const guard = PrioritizationOfGuards(routesAndGuardFunction)
 
-   const guardPath = guard(routesAndGuardFunction.destAndOrigin.toPath, routesAndGuardFunction.destAndOrigin.fromPath)
+   guard(routesAndGuardFunction.destAndOrigin.toPath, routesAndGuardFunction.destAndOrigin.fromPath, nextAction)
+
+   const guardRedirectPath = nextDestination
 
    const noRestriction = element ? element.target.attributes.to.nodeValue : ((location.hash) ? location.hash.replace('#', '') : location.pathname)
 
-   return guardPath || noRestriction
+   return guardRedirectPath || noRestriction
 }
 
 export default routerGuardDestinationPath
