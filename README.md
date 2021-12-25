@@ -1,4 +1,4 @@
-##Single Page Application
+## Single Page Application
 Single page application with dynamic routing by Router module
 
 _want to try this app?_  
